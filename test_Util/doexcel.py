@@ -4,6 +4,10 @@ from openpyxl import load_workbook
 from test_Util.read_config import ReadConfig
 from test_Util import project_path
 from test_method.get_token_method import Request
+import io
+import sys
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')  # 改变标准输出的默认编码
 
 
 class DoExcel:
@@ -60,7 +64,7 @@ class DoExcel:
                     row_data['url'] = self.sheet.cell_value(i, 1)  # 循环第i行，的第1列
                     row_data['headers'] = eval(self.sheet.cell_value(i, 2))  # 循环第i行，的第2列
                     row_data['method'] = self.sheet.cell_value(i, 3)  # 拿到method的值
-                    row_data['data'] = self.sheet.cell_value(i, 4)
+                    row_data['data'] = self.sheet.cell_value(i, 4).encode('utf-8')
                     row_data['title'] = self.sheet.cell_value(i, 5)
                     row_data['except'] = self.sheet.cell_value(i, 6)
                     row_data['sheet_name'] = key
@@ -69,13 +73,13 @@ class DoExcel:
                 for case_id in self.mode[key]:
                     row_data = {}
                     row_data['case'] = self.sheet.cell_value(case_id, 0)  # 拿到case的值
-                    print(row_data['case'])
+
                     row_data['url'] = self.sheet.cell_value(case_id, 1)  # 循环第i行，的第1列
                     row_data['headers'] = eval(self.sheet.cell_value(case_id, 2))  # 循环第i行，的第2列
-                    print(row_data['headers'])
+
                     row_data['method'] = self.sheet.cell_value(case_id, 3)  # 拿到method的值
-                    row_data['data'] = self.sheet.cell_value(case_id, 4)
-                    print(row_data['data'])
+                    row_data['data'] = self.sheet.cell_value(case_id, 4).encode('utf-8')
+
                     row_data['title'] = self.sheet.cell_value(case_id, 5)
                     row_data['except'] = self.sheet.cell_value(case_id, 6)
                     row_data['sheet_name'] = key
